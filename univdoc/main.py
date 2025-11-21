@@ -15,7 +15,8 @@ DEFAULT_TEMPLATES = {
 @click.option('--lang', '-l', default=None, help="Linguagens para documentar, separadas por vírgula. Exemplo: python,php")
 @click.option('--output', '-o', default="./docs", type=click.Path(), help="Diretório de saída para a documentação gerada.")
 @click.option('--template', '-t', default="simple", help="Template Jinja2 para geração da documentação (simple, elegant ou caminho para arquivo).")
-def cli(source, lang, output, template):
+@click.option('--docstyle', '--style', default=None, help="Estilo de docstring a ser priorizado (google, numpy, sphinx, rest, phpdoc). Se não informado, usa detecção automática ou padrão da linguagem.")
+def cli(source, lang, output, template, docstyle):
     """
     UnivDoc -- Gerador universal de documentação por docstrings.
     """
@@ -40,7 +41,7 @@ def cli(source, lang, output, template):
         os.makedirs(output)
 
     # Parse arquivos e gera estrutura de documentação
-    doc_data = parse_source_code(source, langs)
+    doc_data = parse_source_code(source, langs, docstyle)
 
     # Gera Markdown
     output_file = os.path.join(output, "documentacao.md")

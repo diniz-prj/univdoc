@@ -8,10 +8,15 @@ PARSERS = {
     "php": {".php": parse_php_file},
 }
 
-def parse_source_code(source_dir, langs=None):
+def parse_source_code(source_dir, langs=None, docstyle=None):
     """
     Varre o diretório, detecta arquivos das linguagens escolhidas
     e retorna dados extraídos das docstrings/comentários.
+    
+    Args:
+        source_dir: Diretório do código fonte
+        langs: Lista de linguagens a processar (None = todas)
+        docstyle: Estilo de docstring preferido (google, numpy, sphinx, rest, phpdoc)
     """
     if langs is None:
         # Se não informadas, detecta todas suportadas
@@ -26,7 +31,7 @@ def parse_source_code(source_dir, langs=None):
                 if ext in PARSERS.get(lang, {}):
                     parser_fn = PARSERS[lang][ext]
                     full_path = os.path.join(root, filename)
-                    objetos = parser_fn(full_path)
+                    objetos = parser_fn(full_path, docstyle=docstyle)
                     arquivos.append({
                         "nome": filename,
                         "caminho": full_path,

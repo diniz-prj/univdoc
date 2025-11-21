@@ -1,3 +1,4 @@
+import os
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 def render_markdown(doc_data, template_path, output_file):
