@@ -1,5 +1,9 @@
 # UnivDoc
 
+![Python](https://img.shields.io/badge/Python-3.14+-blue.svg)
+![UV](https://img.shields.io/badge/UV-Package%20Manager-orange.svg)
+![License](https://img.shields.io/badge/License-MIT-yellow.svg)
+
 Ferramenta universal para geração automática de documentação baseada em docstrings de código-fonte.
 
 ## Principais funcionalidades
