@@ -1,0 +1,18 @@
+[project]
+name = "univdoc"
+version = "0.1.0"
+description = "Ferramenta universal de geração de documentação por docstrings"
+authors = [
+    { name = "Eduvyres Diniz", email = "eduvyres@gmail.com" }
+]
+license = { text = "MIT" }
+readme = "README.md"
+requires-python = ">=3.8"
+
+dependencies = [
+    "Jinja2>=3.0.0",
+    "click>=8.0.0"
+]
+
+[project.scripts]
+univdoc = "univdoc.main:cli"
