@@ -1,0 +1,24 @@
+# Documentação do Projeto
+
+{% for arquivo in arquivos %}
+## Arquivo: {{ arquivo.nome }}
+
+{% for objeto in arquivo.objetos %}
+### {{ objeto.tipo }}: {{ objeto.nome }}
+
+{{ objeto.docstring }}
+
+{% if objeto.parametros %}
+**Parâmetros:**
+{% for param in objeto.parametros %}
+- `{{ param.nome }}`: {{ param.descricao }}
+{% endfor %}
+{% endif %}
+
+{% if objeto.retorno %}
+**Retorno:** {{ objeto.retorno }}
+{% endif %}
+
+---
+{% endfor %}
+{% endfor %}

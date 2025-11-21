@@ -71,9 +71,98 @@ univdoc --source ./meu_codigo --template elegant
 # Gerando documentação com um template jinja personalizado
 univdoc --source ./meu_codigo --template ./caminho/meu_template.md.jinja
 
+# Especificando o estilo de docstring para Python (Google-style)
+univdoc --source ./meu_codigo --lang python --docstyle google
+
+# Especificando o estilo de docstring para Python (NumPy-style)
+univdoc --source ./meu_codigo --lang python --docstyle numpy
+
+# Especificando o estilo de docstring para Python (Sphinx/reST-style)
+univdoc --source ./meu_codigo --lang python --docstyle sphinx
+
+# Especificando o estilo de docstring para PHP (PHPDoc)
+univdoc --source ./meu_codigo --lang php --docstyle phpdoc
+
+# Usando formato abreviado --style
+univdoc --source ./meu_codigo --style google --output ./docs
+
 ```
 
 A documentação será gerada para os arquivos Python e/ou PHP no diretório de código especificado e salva no diretório de saída informado.
+
+### Estilos de Docstring Suportados
+
+O UnivDoc suporta diferentes estilos de docstring para melhor extração de informações:
+
+#### Python
+- **google** (padrão): Google-style docstrings
+  ```python
+  def funcao_exemplo(param1, param2):
+      """Descrição breve da função.
+      
+      Args:
+          param1 (str): Descrição do parâmetro 1
+          param2 (int): Descrição do parâmetro 2
+      
+      Returns:
+          bool: Descrição do retorno
+      """
+      pass
+  ```
+
+- **numpy**: NumPy-style docstrings
+  ```python
+  def funcao_exemplo(param1, param2):
+      """Descrição breve da função.
+      
+      Parameters
+      ----------
+      param1 : str
+          Descrição do parâmetro 1
+      param2 : int
+          Descrição do parâmetro 2
+      
+      Returns
+      -------
+      bool
+          Descrição do retorno
+      """
+      pass
+  ```
+
+- **sphinx** ou **rest**: Sphinx/reST-style docstrings
+  ```python
+  def funcao_exemplo(param1, param2):
+      """Descrição breve da função.
+      
+      :param param1: Descrição do parâmetro 1
+      :type param1: str
+      :param param2: Descrição do parâmetro 2
+      :type param2: int
+      :returns: Descrição do retorno
+      :rtype: bool
+      """
+      pass
+  ```
+
+#### PHP
+- **phpdoc** (padrão): PHPDoc-style docblocks
+  ```php
+  /**
+   * Descrição breve da função
+   *
+   * @param string $param1 Descrição do parâmetro 1
+   * @param int $param2 Descrição do parâmetro 2
+   * @return bool Descrição do retorno
+   */
+  function funcaoExemplo($param1, $param2) {
+      return true;
+  }
+  ```
+
+**Nota:** Se o parâmetro `--docstyle` não for informado, o UnivDoc:
+- Tentará detectar automaticamente o estilo usado no código
+- Utilizará o padrão mais comum para a linguagem (Google-style para Python, PHPDoc para PHP)
 
 ## Uso com Docker
 

@@ -1,0 +1,32 @@
+# 📝 Documentação Automática
+
+> Gerado por **UnivDoc** | Linguagens: {{ linguagens|join(', ') }}
+
+---
+
+{% for arquivo in arquivos %}
+## 📄 {{ arquivo.nome }}
+
+{% for objeto in arquivo.objetos %}
+<div style="background-color:#f2f2f2;padding:8px;border-radius:6px;margin-bottom:10px">
+  <h3>🔹 {{ objeto.tipo|capitalize }} <code>{{ objeto.nome }}</code></h3>
+  <blockquote>{{ objeto.docstring }}</blockquote>
+
+  {% if objeto.parametros %}
+  <details>
+    <summary><b>Parâmetros</b></summary>
+    <ul>
+      {% for param in objeto.parametros %}
+      <li><code>{{ param.nome }}</code>: {{ param.descricao }}</li>
+      {% endfor %}
+    </ul>
+  </details>
+  {% endif %}
+
+  {% if objeto.retorno %}
+  <p><b>Retorno:</b> {{ objeto.retorno }}</p>
+  {% endif %}
+</div>
+{% endfor %}
+---
+{% endfor %}
