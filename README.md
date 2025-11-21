@@ -33,14 +33,14 @@ univdoc/
 └── .gitignore
 ```
 
-main.py: Faz o parsing dos argumentos do usuário (--source, --lang, --output) e orquestra a chamada das funções.
-parser.py: Função central que chama o parser correto conforme linguagem detectada ou fornecida.
-python_parser.py / php_parser.py: Funções para extrair docstrings/comentários dessas linguagens.
-renderer.py: Recebe os dados extraídos e renderiza via Jinja2.
-templates/default.md.jinja: Template Markdown base configurável.
-tests/: Testes automatizados.
-Dockerfile: Containerização.
-README.md: Documentação clara de uso, instalação e contribuição.
+- main.py: Faz o parsing dos argumentos do usuário (--source, --lang, --output) e orquestra a chamada das funções.
+- parser.py: Função central que chama o parser correto conforme linguagem detectada ou fornecida.
+- python_parser.py / php_parser.py: Funções para extrair docstrings/comentários dessas linguagens.
+- renderer.py: Recebe os dados extraídos e renderiza via Jinja2.
+- templates/default.md.jinja: Template Markdown base configurável.
+- tests/: Testes automatizados.
+- Dockerfile: Containerização.
+- README.md: Documentação clara de uso, instalação e contribuição.
 
 ## Instalação rápida
 
