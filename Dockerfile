@@ -11,7 +11,7 @@ WORKDIR /app
 COPY . /app
 
 # Instala as dependências usando uv
-RUN uv pip install -r pyproject.toml
+RUN uv pip install --system -r pyproject.toml
 
 # Comando padrão do container
 CMD ["univdoc", "--help"]
