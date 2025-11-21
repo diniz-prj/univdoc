@@ -41,7 +41,8 @@ def _parse_google_style_docstring(docstring):
     
     # Parse parâmetros
     param_text = '\n'.join(param_lines)
-    param_matches = re.findall(r'(\w+)\s*(?:\([\w\s,\[\]]+\))?\s*:\s*(.+)', param_text)
+    # Melhor tratamento de parâmetros multilinha
+    param_matches = re.findall(r'(\w+)\s*(?:\([\w\s,\[\]]+\))?\s*:\s*([^\n]+(?:\n(?!\s*\w+\s*(?:\([^)]+\))?\s*:)[^\n]+)*)', param_text, re.MULTILINE)
     for param_name, param_desc in param_matches:
         result["parametros"][param_name.strip()] = param_desc.strip()
     
@@ -89,11 +90,31 @@ def _parse_numpy_style_docstring(docstring):
     
     result["descricao"] = '\n'.join(desc_lines).strip()
     
-    # Parse parâmetros
+    # Parse parâmetros - simplificado para melhor manutenibilidade
     param_text = '\n'.join(param_lines)
-    param_matches = re.findall(r'(\w+)\s*:\s*(\w+(?:\s*,\s*\w+)*)\s*\n?\s*(.+?)(?=\n\w+\s*:|$)', param_text, re.DOTALL)
-    for param_name, param_type, param_desc in param_matches:
-        result["parametros"][param_name.strip()] = param_desc.strip()
+    # Divide por linhas que começam com nome de parâmetro
+    current_param = None
+    current_desc_lines = []
+    
+    for line in param_lines:
+        line_stripped = line.strip()
+        if not line_stripped:
+            continue
+        # Tenta identificar início de novo parâmetro
+        param_start = re.match(r'^(\w+)\s*:\s*(\w+(?:\s*,\s*\w+)*)\s*$', line_stripped)
+        if param_start:
+            # Salva parâmetro anterior se existir
+            if current_param:
+                result["parametros"][current_param] = ' '.join(current_desc_lines).strip()
+            current_param = param_start.group(1)
+            current_desc_lines = []
+        else:
+            # Continua descrição do parâmetro atual
+            current_desc_lines.append(line_stripped)
+    
+    # Salva último parâmetro
+    if current_param:
+        result["parametros"][current_param] = ' '.join(current_desc_lines).strip()
     
     result["retorno"] = '\n'.join(return_lines).strip()
     
@@ -160,7 +181,7 @@ def _detect_docstring_style(docstring):
         return "sphinx"
     
     # Verifica estilo Google
-    if re.search(r'\bArgs:\s*\n', docstring) or re.search(r'\bReturns:\s*\n', docstring):
+    if re.search(r'\bArgs:\s*', docstring) or re.search(r'\bReturns:\s*', docstring):
         return "google"
     
     # Verifica estilo NumPy

@@ -17,7 +17,7 @@ def _parse_phpdoc_docstring(docstring):
         line = line.strip()
         
         # Parse @param
-        param_match = re.match(r'@param\s+(?:\S+\s+)?(\$?\w+)\s*(.+)?', line)
+        param_match = re.match(r'@param\s+(?:\S+\s+)?(\$?\w+)\s*([^@]+)?', line)
         if param_match:
             param_name = param_match.group(1).replace('$', '')
             param_desc = param_match.group(2) or ""
